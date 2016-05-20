@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Hangman</title>
+</head>
+<body>
+	<heading>HANGMAN for SUPERHEROS!!!</heading>
+
+	<div id="game">
+		<p>Press any Key to Start</p>
+	</div>
+
+	<script type="text/javascript">
+
+	/*******
+
+		This is the game of Hangman.  It is using a superhero theme.
+
+		To do this, it will have an array of superhero objects.
+
+		The user will be prompted to start the game by entering any key.
+
+		The game will randomly select a super hero word from the array of superhero objects.
+
+		The user will be prompted to enter a letter to guess which superhero was selected.
+
+		Initially, the superhero name will be displayed with an underscore for each letter in the word.  The number of guesses remaining will also be displayed.
+
+	*****/
+
+	var hangman = {
+		
+		// Set the maximum number of games to a positive value.
+		//		^^^  Maybe this should just be a prompt to continue?
+
+		// Set the maximum number of guesses allowed to a positive value.
+		// Set the number of wins to 0.
+		// Set the string of guesses to ""
+		// Set the currentWord to a random word in the list of superhero themed words
+		// Set the displayedWord to a string that is 2x the length of currentWord
+		//		with the characters alternating between '_' and ' '. i.e. when this string
+		//		is displayed it will look as follows: "_ _ _ _ _ _"
+		// Set the number of correct lettters to 0.
+		//		When this number is equal to the number of letters in the currentWord, the
+		//		user won the current game. Increase the number of wins and the number
+
+		wordList: ["SUPERMAN", "SPIDERMAN", "GREEN ARROW", "CAT WOMAN"],
+
+		maxGames: 3,
+		numWins: 0,
+
+		won: false,
+		guessesAllowed: 10,
+		guesses: [], // Array of letters that have been guessed already
+		currentWord: [], // Array of characters for the current word
+		displayedWord: [],  // Array of characters with '_' for each letter of the current word
+		blanksRemaining: 0, // String to keep track of how many blanks remain
+
+		initDisplayedWord: function(){
+			// For each character in currentWord append '_ ' to displayedWord.
+
+			for (var i=0; i < this.currentWord.length; i++){
+
+				this.displayedWord[i] = "_ ";
+			}
+		},
+
+		newGame: function(){
+			this.won = false;
+			this.guessesAllowed = 5;
+			this.correctLetterCount = 0;
+
+			// Take a random word from the word list and copy each
+			// character into an array for easier parsing
+			var word = this.wordList[Math.floor(Math.random()*this.wordList.length)];
+			for (var i=0; i < word.length; i++) {
+				this.currentWord[i] = word[i];
+			}
+
+			this.initDisplayedWord();
+		},
+
+		letterEntered: function(userInput){
+
+			for(var i=0; i < this.guesses.length; i++) {
+				if (this.guesses[i] == userInput){
+					return true;
+				}
+			}
+			return false;
+		},
+		
+		letterFound: function(userInput) {
+			// Loop through the current word searching for the character entered.
+			// If the character is found, replace the blank in the displayed word
+			// with the character found at that index.
+			// Increase the number of times it was found, i.e. correctLetterCount++
+			// Continue until all the letters in the current word have been checked.
+
+			var found = false;
+			for(var i=0; i < this.currentWord.length; i++){
+				if (this.currentWord[i] == userInput){
+					this.displayedWord[i] = userInput;
+					this.correctLetterCount++;
+					found = true;
+				}
+			}
+			return found;
+		},
+
+		/*****
+			Prompt the user to enter a letter.
+
+			User enters a letter.
+
+			Check the string of guesses to see if the letter has been entered. If the letter has been entered already then go back and prompt for another letter.
+
+			If the letter has not been entered then do the following:
+				add it to the string of guesses
+				redisplay the string
+				decrement the number of guesses
+
+				if the number of guesses = 0 then the user lost the current game.  Indicate to the user that he/she lost and display the correct answer.
+
+			Search the currentWord for the letter entered.
+
+			If the letter is not in the word then decrement, the number of guesses
+
+			If the letter is in the word then replace the '_' at the index where the letter was found with the letter guessed.
+		*****/
+		play: function(userInput){
+
+			// Initialize properties for a new game
+			this.newGame();
+
+			document.write("<br>" + this.displayedWord.join(""));
+			do {
+				// NOTE: this is temporary code before using HTML/CSS
+				// and event handlers.
+				// For now, use a temporary letter chooser for input
+				// Also note, that the display word is only displayed
+				// if the letter has not already been entered.  This
+				// looks funny now because a newline is created.  When
+				// this is using a specific position on the screen it
+				// will make sense.
+				userInput = randomLetter();
+				userInput = userInput.toUpperCase();
+				document.write("<br>Letter Entered: " + userInput + "<br>");
+
+				// Check if letter has already been entered
+				// If the letter has already been entered than proceed
+				// below, otherwise ask for another character
+				if (this.letterEntered(userInput)){
+					continue;
+				}
+
+				// Check if letter entered is in the current word
+				if (this.letterFound(userInput)){
+					document.write(this.displayedWord.join(""));
+				}
+				else {
+					this.guessesAllowed--;
+				}
+			}while (!this.won && this.guessesAllowed > 0);
+
+			document.writeln("<br>The word was: " + this.currentWord.join("") + "<br>");
+			if (this.won){
+				document.writeln("You WON!!!");
+			}
+			else {
+				document.writeln("You LOST - BUMMER!!");
+			}
+			
+		}
+
+	} // end of hangman object
+
+	// --- FUNCTIONS ---
+
+	/*
+	document.onkeyup = function(event) {
+		var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+
+	// When the user enters a character do the following:
+	//
+	//	1: convert to uppercase
+	//	2: if it was already entered, do nothing  // this is another function
+	//	3: loop through the currentword until complete
+	//	4: if the character matches:
+	//		4.1 replace the character in the displayed word at
+	//			displayedWord[index*2] // I think - need to verify
+	//			set matched = true;
+	//	5: continue looping, i.e. go back to step 3
+	//	6: display the displayedWord
+	//	
+	//
+			// Placing the html into the game ID
+		document.querySelector('#game').innerHTML = html;
+
+		document.write("<br>The Letter Entered Was: " + userGuess);
+	}
+	*/
+
+	// Temporary function to return a random letter as the user's guess
+
+	function randomLetter() {
+
+		var letters = ['a', 'b', 'c', 'd','e', 'f', 'g', 'r', 'n', 'o','w', 's','u','p','m','q'];
+
+		return letters[Math.floor(Math.random()*letters.length)];
+	}
+
+	function playHangman() {
+
+		var userInput = randomLetter();
+
+		while (userInput != 'q' && hangman.maxGames > 0) {
+			hangman.play(userInput);
+			hangman.maxGames--;
+		}
+
+	}
+
+	playHangman();
+
+	
+	</script>
+
+</body>
+</html>
