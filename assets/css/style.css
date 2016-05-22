@@ -1,3 +1,51 @@
-tr, h1, h2 {
+th, tr, h1, h2 {
 	text-align: center;
 }
+
+header {
+
+}
+
+body {
+
+}
+
+.game {
+
+
+}
+
+.title-image {
+
+}
+
+.main-content {
+	position: absolute;
+	width: 100%;
+	height: 500px;
+	background-image: url(../images/aquaman-background.jpg);
+	background-repeat: no-repeat;
+	background-position: top left;
+}
+
+.superhero-image {
+	width: 290px;
+	height: 310px;
+	border: 1px blue;
+	float: left;
+	margin: 25px;
+
+}
+
+.game-panel {
+	width: 225px;
+	height: 200px;
+	border: 1px red;
+	float: right;
+	margin: 50px 25px;
+}
+
+/*
+table.game-panel {
+	margin: 50px 25px;
+}*/
