@@ -59,17 +59,25 @@
 				return;
 			}
 
-			document.querySelector('#guess-count').innerHTML = "<td>" + hangman.guessesLeft + "</td>";
+			hangman.takeGuess(userGuess);
 
-			document.querySelector('#cw-display').innerHTML = "<td>" + hangman.getDisplayedWord() + "</td>";
-
-			document.querySelector('#guess-display').innerHTML = "<td>" + hangman.getGuesses() + "</td>";
-
+			displayData();
 		};
 
 		//----- FUNCTIONS ---
 		function init() {
 			hangman.newGame(8);
+
+			displayData();
+		}
+
+		function displayData() {
+
+			document.querySelector('#guess-count').innerHTML = "<td>" + hangman.guessesLeft + "</td>";
+
+			document.querySelector('#cw-display').innerHTML = "<td>" + hangman.getDisplayedWord() + "</td>";
+
+			document.querySelector('#guess-display').innerHTML = "<td>" + hangman.getGuesses() + "</td>";
 		}
 
 	</script>

@@ -99,6 +99,32 @@
 			return found;
 		},
 
+		/****
+			Update the hangman attributes based on the user's guess.
+			The HTML will use the attributes to update the display
+		****/
+		takeGuess: function(userInput){
+			// Check if letter has already been entered
+			// If the letter has already been entered then wait for another character
+			// otherwise proceed below to process the new letter
+			if (this.letterEntered(userInput)){
+				return;
+			}
+
+			// Check if letter entered is in the current word
+			// letterFound() will modify the displayedWord array
+			//		so every occurance of the letter is in place
+			if (this.letterFound(userInput)){
+				// If we guessed all the correct letters, we won!
+				if (this.currentWord.join("") == this.displayedWord.join("")) {
+					this.won = true;
+				}
+			}
+			else {
+				this.guessesLeft--;
+			}
+		},
+
 		/*****
 			Start a new game.
 
