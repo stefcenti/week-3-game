@@ -63,17 +63,18 @@
 		document.onkeyup = function(event) {
 			var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
 
-			if (hangman.won){
-				alert('You Won!!');
-				hangman.newGame(8);
-			}
-			else if (hangman.guessesLeft <= 0) {
-				return;
-			}
-
 			hangman.takeGuess(userGuess);
 
 			displayData();
+			
+			if (hangman.won){
+				alert('You Won!!');
+				init();
+			}
+			else if (hangman.guessesLeft <= 0) {
+				alert('You Lost - Try Again!');
+				init();
+			}
 		};
 
 		//----- FUNCTIONS ---

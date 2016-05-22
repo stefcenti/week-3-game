@@ -21,7 +21,14 @@
 		//		When this number is equal to the number of letters in the currentWord, the
 		//		user won the current game. Increase the number of wins and the number
 
-		wordList: ["SUPERMAN", "SPIDERMAN", "GREEN ARROW", "CAT WOMAN"],
+		wordList: [
+			"SUPERMAN", "SPIDERMAN", "GREEN ARROW", "CAT WOMAN",
+			"AQUAMAN", "WONDER WOMAN", "THE XMEN", "JUSTICE LEAGUE",
+			"ANTMAN", "BATMAN", "ROBIN", "DARK KNIGHT", "DEADPOOL", 
+			"CAPTAIN AMERICA", "IRONMAN", "GREEN LANTERN", "CLARK KENT",
+			"BRUCE WAYNE", "BARRY ALLEN", "DIANA", "OLIVER QUEEN",
+			"ARROW", "THE FLASH", "HAL JORDAN", "MARVEL COMICS", 
+			"DC COMICS"],
 
 		maxGames: 3,
 		numWins: 0,
