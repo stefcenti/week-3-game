@@ -3,6 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hangman</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
 </head>
 <body>
 	<heading>HANGMAN for SUPERHEROS!!!</heading>
@@ -55,7 +57,11 @@
 		document.onkeyup = function(event) {
 			var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
 
-			if (hangman.won || hangman.guessesLeft <= 0) {
+			if (hangman.won){
+				alert('You Won!!');
+				hangman.newGame(8);
+			}
+			else if (hangman.guessesLeft <= 0) {
 				return;
 			}
 
@@ -72,6 +78,8 @@
 		}
 
 		function displayData() {
+
+			document.querySelector('#win-count').innerHTML = "<td>" + hangman.numWins + "</td>";
 
 			document.querySelector('#guess-count').innerHTML = "<td>" + hangman.guessesLeft + "</td>";
 

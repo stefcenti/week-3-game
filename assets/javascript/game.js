@@ -118,6 +118,7 @@
 				// If we guessed all the correct letters, we won!
 				if (this.currentWord.join("") == this.displayedWord.join("")) {
 					this.won = true;
+					this.numWins++;
 				}
 			}
 			else {
