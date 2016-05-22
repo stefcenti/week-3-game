@@ -8,7 +8,28 @@
 	<heading>HANGMAN for SUPERHEROS!!!</heading>
 
 	<div id="game">
-		<p>Press any Key to Start</p>
+		<table>
+			<tr>
+				<th>Press any Key to Start</th>
+			</tr>
+
+			<tr><td>Wins</td></tr>
+
+			<tr id="win-count"><td>0</td></tr>
+			
+			<tr><td>Current Word</td></tr>
+
+			<tr id="cw-display"><td></td></tr>
+
+			<tr><td>Guesses Remaining</td></tr>
+
+			<tr id="guess-count"><td></td></tr>
+
+			<tr><td>Letters Already Guessed</td></tr>
+
+			<tr id="guess-display"><td></td></tr>
+
+		</table>
 	</div>
 
 	<script type="text/javascript" src="assets/javascript/game.js"></script>
@@ -19,24 +40,37 @@
 
 	<script type="text/javascript">
 
-		// Currently plays hangman automatically using a random list of letters.
-		// It will play the games 3 times with 5 guesses allowed per game.
-		playHangman(3, 8);
+		// ** TEMPORARY **
+		// Test hangman object with autoPlay method.  No user
+		// input needed.
+		//
+		// Call playHangman for 3 games 8 guesses
+		// playHangman(3, 8);
+		// ** END TEMP **
 
-	/*
-	document.onkeyup = function(event) {
-		var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
+		// Initialize the hangman game once the window is loaded
+		// and before any user events are handled.
+		window.onload = init; // initialize the hangman
 
-	
-			// Taking the tallies and displaying them in HTML
-			var html = "<p>Enter a letter: </p>"
+		document.onkeyup = function(event) {
+			var userGuess = String.fromCharCode(event.keyCode).toUpperCase();
 
-			// Placing the html into the game ID
-			document.querySelector('#game').innerHTML = html;
+			if (hangman.won || hangman.guessesLeft <= 0) {
+				return;
+			}
 
-			hangman.play(userGuess);
-	}
-	*/
+			document.querySelector('#guess-count').innerHTML = "<td>" + hangman.guessesLeft + "</td>";
+
+			document.querySelector('#cw-display').innerHTML = "<td>" + hangman.getDisplayedWord() + "</td>";
+
+			document.querySelector('#guess-display').innerHTML = "<td>" + hangman.getGuesses() + "</td>";
+
+		};
+
+		//----- FUNCTIONS ---
+		function init() {
+			hangman.newGame(8);
+		}
 
 	</script>
 

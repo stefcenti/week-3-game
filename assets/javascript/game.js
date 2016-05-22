@@ -30,7 +30,6 @@
 		guessesLeft: 10,
 		guesses: [], // Array of letters that have been guessed already
 		currentWord: [], // Array of characters for the current word
-		correctLetterCount: 0, // Keep track of correct letters found to determine winner
 		displayedWord: [],  // Array of characters with '_' for each letter of the current word
 		blanksRemaining: 0, // String to keep track of how many blanks remain
 
@@ -50,7 +49,6 @@
 			this.won = false;
 			this.guessesLeft = guessesAllowed;
 			this.guesses = [];
-			this.correctLetterCount = 0;
 			this.currentWord = [];
 			this.displayedWord = [];
 
@@ -62,6 +60,14 @@
 			}
 
 			this.initDisplayedWord();
+		},
+
+		getDisplayedWord: function(){
+			return this.displayedWord.join("");
+		},
+
+		getGuesses: function() {
+			return this.guesses.join("");
 		},
 
 		letterEntered: function(userInput){
@@ -81,14 +87,12 @@
 			// Loop through the current word searching for the character entered.
 			// If the character is found, replace the blank in the displayed word
 			// with the character found at that index.
-			// Increase the number of times it was found, i.e. correctLetterCount++
 			// Continue until all the letters in the current word have been checked.
 
 			var found = false;
 			for(var i=0; i < this.currentWord.length; i++){
 				if (this.currentWord[i] == userInput){
 					this.displayedWord[i] = userInput;
-					this.correctLetterCount++;
 					found = true;
 				}
 			}
