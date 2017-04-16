@@ -9,7 +9,7 @@ Screenshots:
 File Structure
 --------------
 
-![File Structure](/readme_images/file_structure.JPG?raw=true"file_structure.JPG") 
+![File Structure](/readme-images/file_structure.JPG?raw=true"superhero_hangman_screen_01.png") 
 
 Login/Signup | Landing Page Nav Bar
 -------------|---------------------
